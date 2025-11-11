@@ -53,15 +53,10 @@ class ViewController: UIViewController {
 
         // 3. Terapkan makeHiddenOnCapture pada layer view tersebut
 //        passwordTextField.layer.makeHiddenOnCapture()
-        
-//        passwordTextField.layer.makeHiddenOnCapture()
-        
-//        passwordTextField.layer.makeHiddenOnCapture()
-        
 //        view.hideOnScreenshot(views: keyboardView)
        
-        view.enableProtectionWithCustom(withCustomView: showPrivacyOverlay())
-//        passwordTextField.enableProtectionWithBlackScreen()
+//        view.enableProtectionWithCustom(withCustomView: showPrivacyOverlay())
+        passwordTextField.enableProtectionWithBlackScreen()
 //        view.enableProtectionWithBlackScreen()
 
     }
@@ -97,6 +92,30 @@ class ViewController: UIViewController {
            return keyboard
        }()
     
+    func addToggleInsideTextField(withTextField textField: UITextField, action: Selector, systemName name: String) {
+        let toggleButton = UIButton(type: .custom)
+        toggleButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.plain()
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+            config.image = UIImage(systemName: name)
+            config.baseBackgroundColor = .gray
+            toggleButton.configuration = config
+        } else {
+            // Fallback untuk iOS < 15
+            toggleButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8) // Padding
+            toggleButton.tintColor = .gray
+            toggleButton.setImage(UIImage(systemName: name), for: .normal)
+        }
+        
+        toggleButton.addTarget(self, action: action, for: .touchUpInside)
+        
+        textField.rightView = toggleButton
+        textField.rightViewMode = .always
+        textField.isSecureTextEntry = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ViewController")
@@ -120,47 +139,7 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        //        // Customize password field (opsional)
-        //        passwordTextField.placeholder = "Enter your password"
-        //        passwordTextField.borderStyle = .roundedRect
-        //        passwordTextField.clearOnScreenshot = true
-        //
-        //        // Tambahkan styling
-        //        passwordTextField.layer.cornerRadius = 8
-        //        passwordTextField.layer.borderWidth = 1
-        //        passwordTextField.layer.borderColor = UIColor.systemGray4.cgColor
-        //
-        //        // Set delegate
-        //        passwordTextField.delegate = self
-        
-        
-        
-        let toggleButton = UIButton(type: .custom)
-        toggleButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        
-        if #available(iOS 15.0, *) {
-            var config = UIButton.Configuration.plain()
-            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-            config.image = UIImage(systemName: "eye.slash")
-            config.baseBackgroundColor = .gray
-            toggleButton.configuration = config
-        } else {
-            // Fallback untuk iOS < 15
-            toggleButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8) // Padding
-            toggleButton.tintColor = .gray
-            toggleButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-        }
-        
-        toggleButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
-        
-        passwordTextField.rightView = toggleButton
-        passwordTextField.rightViewMode = .always
-        
-        toggleButton.layer.removeProtectionComponent()
-        
-
-        // PENTING: Selalu true untuk prevent screenshot
-//        passwordTextField.isSecureTextEntry = true
+        addToggleInsideTextField(withTextField: passwordTextField, action: #selector(togglePasswordVisibility), systemName: "eye.slash")
         
         // PENTING: Disable keyboard sistem iOS
         // Set inputView ke empty view agar keyboard sistem tidak muncul
@@ -169,32 +148,8 @@ class ViewController: UIViewController {
         // Disable auto-correction dan spell checking
 //        passwordTextField.autocorrectionType = .no
 //        passwordTextField.spellCheckingType = .no
-        
-
     }
-    
-    // buat privacyView sekali
-    private lazy var privacyViewContainer: UIView = {
-        // container supaya kita bisa pakai autolayout dengan leftView
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
-
-        let pv = PrivacyProtectionView()
-        container.addSubview(pv)
-
-        // biar ukuran container mengikuti pv
-        NSLayoutConstraint.activate([
-            pv.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            pv.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            pv.topAnchor.constraint(equalTo: container.topAnchor),
-            pv.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            pv.widthAnchor.constraint(equalToConstant: pv.intrinsicContentSize.width),
-            pv.heightAnchor.constraint(equalToConstant: pv.intrinsicContentSize.height)
-        ])
-
-        return container
-    }()
-    
+       
     @objc func keyboardWilDisplay(notification: Notification) {
         if let keyboardFrame:NSValue =
             notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -214,29 +169,17 @@ class ViewController: UIViewController {
 
     @objc func togglePasswordVisibility(_ sender: UIButton) {
         passwordTextField.isSecureTextEntry.toggle()
-        let imgName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
-        
-        sender.setImage(UIImage(systemName: imgName), for: .normal)
-        
-        let currentText = passwordTextField.text
-        passwordTextField.text = ""
-        passwordTextField.text = currentText
-        
 
-//        if UIScreen.main.isCaptured {
-//            print("ANJAY")
-//            passwordTextField.isSecureTextEntry = true
-//        }
+        if passwordTextField.isSecureTextEntry {
+            sender.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        } else {
+            sender.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
         
-        //
-//        if !passwordTextField.isSecureTextEntry && UIScreen.main.isCaptured {
-//            showSecureOverlay()
-//            print("ACTIVE")
-//        } else {
-//            removeSecureOverlay()
-//            print("NONACTIVE")
-//
-//        }
+//        let currentText = passwordTextField.text
+//        passwordTextField.text = ""
+//        passwordTextField.text = currentText
+        
     }
     
     func showPrivacyOverlay() -> UIView {
@@ -288,6 +231,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func dismissOverlay() {
+        view.removeProtectionComponent()
         view.window?.viewWithTag(1001)?.removeFromSuperview()
     }
 }

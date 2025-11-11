@@ -108,6 +108,7 @@ public extension CALayer {
                     print("Record 1")
                 } else {
                     print("Record 2")
+                    self.removeProtectionComponent()
                     replacementView?.alpha = 0
                 }
             }
@@ -121,34 +122,18 @@ public extension CALayer {
     }
 }
 
-// MARK: - UIView Extension
+// MARK: - UIWindow Extension
 public extension UIView {
     // Menutupi seluruh view (layer dari self)
-    @objc func enableProtectionWithBlackScreen() {
+    func enableProtectionWithBlackScreen() {
         self.layer.makeHiddenOnCapture()
     }
     
-    @objc func enableProtectionWithCustom(withCustomView componentView: UIView) {
+    func enableProtectionWithCustom(withCustomView componentView: UIView) {
         self.layer.makeHiddenOnCapture(withCustomView: componentView)
     }
 
-    @objc func removeProtectionComponent() {
-        self.removeProtectionComponent()
-    }
-}
-
-// MARK: - UIWindow Extension
-public extension UIWindow {
-    // Menutupi seluruh view (layer dari self)
-    @objc override func enableProtectionWithBlackScreen() {
-        self.layer.makeHiddenOnCapture()
-    }
-    
-    @objc override func enableProtectionWithCustom(withCustomView componentView: UIView) {
-        self.layer.makeHiddenOnCapture(withCustomView: componentView)
-    }
-
-    @objc override func removeProtectionComponent() {
-        self.removeProtectionComponent()
+    func removeProtectionComponent() {
+        self.layer.removeProtectionComponent()
     }
 }
