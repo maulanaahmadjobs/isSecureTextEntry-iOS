@@ -3,5 +3,6 @@ version = 1
 [[analyzers]]
 name = "swift"
 
-[[analygzers]]
+[[analyzers]]
 name = "test-coverage"
+enabled = true
