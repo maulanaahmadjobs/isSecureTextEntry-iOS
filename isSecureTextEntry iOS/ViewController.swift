@@ -26,39 +26,38 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
 
         
-//        if let window = view.window {
+        // ini berhasil background hitam
+//        if view.window != nil {
 //        view.window?.makeSecure()
 //        }
-        
+
+// =======================START==========================================
         // Atau periksa seluruh window:
 //        if let w = UIApplication.shared.windows.first {
 //            w.printSubviewTree()
 //        }
-
-//        view.window?.makeSecure()
-//        showPrivacyOverlay()
         
 //        passwordTextField.debugPrintHierarchy()
-        
-//        self.view.addSubview(screenshotBlockLabel)
-//        guard let secureView = SecureField().secureContainer else {return}
-//        self.view.addSubview(secureView)
-        
-        // 1. Buat view yang ingin disembunyikan saat screenshot/screen recording
-//        let mySecretView = UIView(frame: CGRect(x: 50, y: 100, width: 200, height: 100))
-//        mySecretView.backgroundColor = .red
-//
-//        // 2. Tambahkan ke parent view
-//        view.addSubview(mySecretView)
+// =======================END==========================================
 
         // 3. Terapkan makeHiddenOnCapture pada layer view tersebut
 //        passwordTextField.layer.makeHiddenOnCapture()
 //        view.hideOnScreenshot(views: keyboardView)
        
 //        view.enableProtectionWithCustom(withCustomView: showPrivacyOverlay())
-        passwordTextField.enableProtectionWithBlackScreen()
+        
+//        ScureScreen().addScureContent(withSecureView: passwordTextField, withCustomView: showPrivacyOverlay())
+        
+        
+        // Componen tapi gak bisa di klik componen textField nya, cocok untuk image dan konten
+//        ScureScreen().addScureContent(withSecureView: passwordTextField)
+        
+        // ini berhasil
+//        view.enableSecureWithCustomView(showPrivacyOverlay())
+        
+//        passwordTextField.enableProtectionWithBlackScreen()
 //        view.enableProtectionWithBlackScreen()
-
+        
     }
     
     
@@ -167,7 +166,7 @@ class ViewController: UIViewController {
         
     }
 
-    @objc func togglePasswordVisibility(_ sender: UIButton) {
+    @objc func togglePasswordVisibility( sender: UIButton) {
         passwordTextField.isSecureTextEntry.toggle()
 
         if passwordTextField.isSecureTextEntry {
@@ -231,8 +230,8 @@ class ViewController: UIViewController {
     }
     
     @objc private func dismissOverlay() {
-        view.removeProtectionComponent()
-        view.window?.viewWithTag(1001)?.removeFromSuperview()
+        view.removeSecureProtection()
+//        view.window?.viewWithTag(1001)?.removeFromSuperview()
     }
 }
 

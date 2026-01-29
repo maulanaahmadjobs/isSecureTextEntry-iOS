@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		577108092F2B108F00ED2013 /* .deepsource.toml in Resources */ = {isa = PBXBuildFile; fileRef = 577108082F2B108B00ED2013 /* .deepsource.toml */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		5738AE102EB071FE00AC7422 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		5738ADF92EB071FB00AC7422 /* isSecureTextEntry iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "isSecureTextEntry iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5738AE0F2EB071FE00AC7422 /* isSecureTextEntry iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "isSecureTextEntry iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5738AE192EB071FE00AC7422 /* isSecureTextEntry iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "isSecureTextEntry iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		577108082F2B108B00ED2013 /* .deepsource.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .deepsource.toml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		5738ADF02EB071FB00AC7422 = {
 			isa = PBXGroup;
 			children = (
+				577108082F2B108B00ED2013 /* .deepsource.toml */,
 				5738ADFB2EB071FB00AC7422 /* isSecureTextEntry iOS */,
 				5738AE122EB071FE00AC7422 /* isSecureTextEntry iOSTests */,
 				5738AE1C2EB071FE00AC7422 /* isSecureTextEntry iOSUITests */,
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				577108092F2B108F00ED2013 /* .deepsource.toml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
