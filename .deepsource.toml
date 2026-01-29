@@ -4,5 +4,4 @@ version = 1
 name = "swift"
 
 [[analygzers]]
-name = "coverage"
-enabled = true
+name = "test-coverage"
